@@ -17,7 +17,9 @@ def database_manage():
                     phone_number TEXT NOT NULL,
 	                physical_interest TEXT NOT NULL,
 	                workout_time TEXT NOT NULL,
-	                gym_location TEXT NOT NULL	
+	                gym_location TEXT NOT NULL,
+                    profile_pic TEXT,
+                    gender TEXT
                 ); """
         cur.execute(table)
         conn.commit()
@@ -80,7 +82,7 @@ def get_next_serial_number():
         if conn:
             conn.close()
 
-def add_user_to_db(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location):
+def add_user_to_db(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location, profile_pic, gender):
     try:
         conn = sqlite3.connect(file)
         print("connection secure")
@@ -94,16 +96,19 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
         physical_interst_str = ','.join(physical_interest).lower() if isinstance(physical_interest, list) else physical_interest.lower()
         workout_time_str = ','.join(workout_time).lower() if isinstance(workout_time, list) else workout_time.lower()
         gym_location_str = ','.join(gym_location).lower() if isinstance(gym_location, list) else gym_location.lower()
+        gender = gender.lower()
         phone_number = format_phone_number(phone_number)
-        cur.execute(""" INSERT INTO users(serial_number, email, full_name, pword, phone_number, physical_interest, workout_time, gym_location)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?);""", (serial_number,
+        cur.execute(""" INSERT INTO users(serial_number, email, full_name, pword, phone_number, physical_interest, workout_time, gym_location, profile_pic, gender)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""", (serial_number,
                                           email, 
                                           full_name, 
                                           pword, 
                                           phone_number, 
                                           physical_interst_str, 
                                           workout_time_str, 
-                                          gym_location_str))
+                                          gym_location_str,
+                                          profile_pic,
+                                          gender))
         conn.commit()
         print("User added successfully")
     except sqlite3.Error as e:
@@ -138,7 +143,7 @@ def get_messages(sender_id: int, receiver_id: int):
             conn.close()
 
 
-\
+
 # def delete_user(serial_number):
 #     """
 #     Delete a user from the database based on their serial_number.
@@ -165,8 +170,46 @@ def get_messages(sender_id: int, receiver_id: int):
 #     try:
 #         conn = sqlite3.connect(file)
 #         cur = conn.cursor()
-#         cur.execute("UPDATE users SET serial_number = ? WHERE serial_number = ?", (7, 8))
+#         cur.execute("UPDATE users SET gender = ? WHERE serial_number = ?", ('prefer not to say', 20))
 #         conn.commit()
 #     except sqlite3.Error as e:
 #         print(f"update error: {e}")
     
+
+# def add_profile_pic_column():
+#     """
+#     Add a new column 'profile_pic' to the users table that can be NULL.
+#     """
+#     try:
+#         conn = sqlite3.connect(file)
+#         cur = conn.cursor()
+
+#         # Add the new column
+#         cur.execute("ALTER TABLE users ADD COLUMN profile_pic TEXT;")
+#         conn.commit()
+#         print("Column 'profile_pic' added successfully.")
+#     except sqlite3.Error as e:
+#         print(f"Database error: {e}")
+#     finally:
+#         if conn:
+#             conn.close()
+
+
+# def add_gender_column():
+#     """
+#     Add a new column 'gender' to the users table that can be NULL.
+#     """
+#     try:
+#         conn = sqlite3.connect(file)
+#         cur = conn.cursor()
+
+#         # Add the new column
+#         cur.execute("ALTER TABLE users ADD COLUMN gender TEXT;")
+#         conn.commit()
+#         print("Column 'gender' added successfully.")
+#     except sqlite3.Error as e:
+#         print(f"Database error: {e}")
+#     finally:
+#         if conn:
+#             conn.close()
+
