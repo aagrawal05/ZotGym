@@ -3,7 +3,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import heapq
 
-file = '../database1.db'
+file = '../database.db'
 try:
     conn = sqlite3.connect(file)
     # print("made")
