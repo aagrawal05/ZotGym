@@ -1,5 +1,6 @@
-from flask import Flask, redirect, render_template, request
-from database import add_user_to_db, database_manage
+from flask import Flask, redirect, render_template, request, jsonify
+from database import add_user_to_db, database_manage, create_messages_table, drop_table, write_fake_messages, get_messages
+import sqlite3
 
 app = Flask(__name__)
 
@@ -22,3 +23,27 @@ def signup():
 
     return render_template('create_profile.html')
 
+@app.route('/messages', methods = ['GET, POST'])
+def get_message():
+    if request.method == 'GET':
+        ids = request.get_json()
+        sender = ids['from']
+        receiver = ids['to']
+        result = get_messages(sender, receiver).fetchall()
+        all_messages = []
+        for message in result:
+            message_dict = {}
+            if message[1] == sender:
+                message_dict['isSender'] = True
+            else:
+                message_dict['isSender'] = False
+            message_dict['message'] = message[3]
+            all_messages.append(message_dict)
+        return jsonify(all_messages)
+    
+
+
+
+
+
+write_fake_messages()

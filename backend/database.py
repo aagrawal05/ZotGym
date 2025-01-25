@@ -1,5 +1,7 @@
 import sqlite3
 import re
+from datetime import datetime
+import time
 
 file = "database.db"
 def database_manage():
@@ -26,6 +28,36 @@ def database_manage():
         if conn:
             conn.close()
 
+def handle_connect():
+    conn = sqlite3.connect(file)
+    cur = conn.cursor()
+    return cur
+
+def drop_table():
+    cur = handle_connect()
+    cur.execute('DROP TABLE messages')
+
+def create_messages_table():
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        cur.execute("""CREATE TABLE messages(
+                    message_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    sender_id INTEGER NOT NULL,
+                    receiver_id INTEGER NOT NULL,
+                    message_text TEXT NOT NULL,
+                    time INTEGER NOT NULL,
+                    FOREIGN KEY(sender_id) REFERENCES users(serial_number),
+                    FOREIGN KEY(receiver_id) REFERENCES users(serial_number)
+                    );
+                    """)
+        conn.commit()
+    except sqlite3.Error as e:
+        print(f'Failed creating table, error {e}')
+    finally:
+        if conn:
+            conn.close()
+        
 
 def format_phone_number(phone_number):
     formatted_phone_number = re.sub(r'\D', '', phone_number)
@@ -80,8 +112,33 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
         if conn:
             conn.close()
 
+def write_fake_messages():
+    conn = sqlite3.connect(file)
+    cur = conn.cursor()
+    cur_time = round(time.time() * 1000)
+    cur.execute('''INSERT INTO messages(sender_id, receiver_id, message_text, time) 
+                VALUES(3, 4, 'what is up', ?)''', (cur_time,))  
+    conn.commit() 
 
 
+
+
+
+def get_messages(sender_id: int, receiver_id: int):
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        cur.execute("""SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) LIMIT 10
+                    ORDER BY message_id DESC""", (sender_id, receiver_id, receiver_id, sender_id))
+        conn.commit()
+    except:
+        print('failed')
+    finally:
+        if conn:
+            conn.close()
+
+
+\
 # def delete_user(serial_number):
 #     """
 #     Delete a user from the database based on their serial_number.
