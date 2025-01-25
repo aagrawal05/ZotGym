@@ -1,4 +1,4 @@
-CREATE TABLE user(
+CREATE TABLE users (
 	email text PRIMARY KEY,
 	full_name text,
 	pword text,
