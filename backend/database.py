@@ -1,5 +1,7 @@
 import sqlite3
 import re
+from datetime import datetime
+import time
 
 file = "database.db"
 def database_manage():
@@ -26,16 +28,27 @@ def database_manage():
         if conn:
             conn.close()
 
+def handle_connect():
+    conn = sqlite3.connect(file)
+    cur = conn.cursor()
+    return cur
+
+def drop_table():
+    cur = handle_connect()
+    cur.execute('DROP TABLE messages')
+
 def create_messages_table():
     try:
         conn = sqlite3.connect(file)
         cur = conn.cursor()
         cur.execute("""CREATE TABLE messages(
-                    message_id SERIAL PRIMARY KEY,
-                    sender_id INTEGER,
-                    receiver_id INTEGER,
-                    message_text TEXT,
-                    time TIMESTAMP
+                    message_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    sender_id INTEGER NOT NULL,
+                    receiver_id INTEGER NOT NULL,
+                    message_text TEXT NOT NULL,
+                    time INTEGER NOT NULL,
+                    FOREIGN KEY(sender_id) REFERENCES users(serial_number),
+                    FOREIGN KEY(receiver_id) REFERENCES users(serial_number)
                     );
                     """)
         conn.commit()
@@ -99,6 +112,17 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
         if conn:
             conn.close()
 
+def write_fake_messages():
+    conn = sqlite3.connect(file)
+    cur = conn.cursor()
+    cur_time = round(time.time() * 1000)
+    cur.execute('''INSERT INTO messages(sender_id, receiver_id, message_text, time) 
+                VALUES(3, 4, 'what is up', ?)''', (cur_time,))  
+    conn.commit() 
+
+
+
+
 
 def get_messages(sender_id: int, receiver_id: int):
     try:
@@ -112,6 +136,9 @@ def get_messages(sender_id: int, receiver_id: int):
     finally:
         if conn:
             conn.close()
+
+
+\
 # def delete_user(serial_number):
 #     """
 #     Delete a user from the database based on their serial_number.
