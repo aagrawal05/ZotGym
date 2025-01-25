@@ -26,6 +26,25 @@ def database_manage():
         if conn:
             conn.close()
 
+def create_messages_table():
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        cur.execute("""CREATE TABLE messages(
+                    message_id SERIAL PRIMARY KEY,
+                    sender_id INTEGER,
+                    receiver_id INTEGER,
+                    message_text TEXT,
+                    time TIMESTAMP
+                    );
+                    """)
+        conn.commit()
+    except sqlite3.Error as e:
+        print(f'Failed creating table, error {e}')
+    finally:
+        if conn:
+            conn.close()
+        
 
 def format_phone_number(phone_number):
     formatted_phone_number = re.sub(r'\D', '', phone_number)
@@ -81,7 +100,18 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
             conn.close()
 
 
-
+def get_messages(sender_id: int, receiver_id: int):
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        cur.execute("""SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) LIMIT 10
+                    ORDER BY message_id DESC""", (sender_id, receiver_id, receiver_id, sender_id))
+        conn.commit()
+    except:
+        print('failed')
+    finally:
+        if conn:
+            conn.close()
 # def delete_user(serial_number):
 #     """
 #     Delete a user from the database based on their serial_number.

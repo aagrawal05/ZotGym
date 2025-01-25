@@ -17,6 +17,11 @@ def signup():
         physical_interests = request.form.get('physical_interest')
         workout_time = request.form.get('workout_time')
         gym_location = request.form.get('gym_location')
-        # database_manage()
+        database_manage()
         add_user_to_db(full_name, email, pword, phone_number, physical_interests, workout_time, gym_location)
     return render_template('create_profile.html')
+
+@app.route('/messages', methods = ['GET', 'POST'])
+def messages():
+    if request.method == 'GET':
+        return render_template('messages.html')
