@@ -27,8 +27,12 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
         conn = sqlite3.connect(file)
         print("connection secure")
         cur = conn.cursor()
-        query = f'INSERT INTO users(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location) VALUES ({email}, {full_name}, {pword}, {phone_number}, {physical_interest}, {workout_time}, {gym_location})'
-        cur.execute(query)
-    except:
-        print("Failed")
+        cur.execute(""" INSERT INTO users(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location)
+        VALUES(?, ?, ?, ?, ?, ?, ?);""", (email, full_name, pword, phone_number, physical_interest, workout_time, gym_location))
+        conn.commit()
+    except sqlite3.Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
 
