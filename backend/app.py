@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from database import add_user_to_db
+from database import add_user_to_db, database_manage
 
 app = Flask(__name__)
 
@@ -17,6 +17,7 @@ def signup():
         physical_interests = request.form.get('physical_interest')
         workout_time = request.form.get('workout_time')
         gym_location = request.form.get('gym_location')
-        add_user_to_db(full_name, email, pword, phone_number, physical_interests, workout_time, gym_location)
+        database_manage()
+        add_user_to_db(email, full_name, pword, phone_number, physical_interests, workout_time, gym_location)
 
     return render_template('create_profile.html')
