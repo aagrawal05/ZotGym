@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 
+import Bubble from "@/components/bubble"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,6 +36,7 @@ export default function Home() {
             height={38}
             priority
           />
+          <Bubble is_sender={false} message={"test"} />
           <ol>
             <li>
               Get started by editing <code>src/pages/index.js</code>.
