@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from database import add_user_to_db, database_manage, delete_user
+from database import add_user_to_db, database_manage
 
 app = Flask(__name__)
 
