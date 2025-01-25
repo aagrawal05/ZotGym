@@ -21,8 +21,14 @@ def database_manage(emai, full_name, pword, phone_number, physical_interst, work
     
     return None
 
-def main():
-    database_manage("jaeminy", "James", "abc", "123", "lifting", "Monday Evening", "ARC")
+def add_user_to_db(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location):
+    file = 'database1.db'
+    try:
+        conn = sqlite3.connect(file)
+        print("connection secure")
+        cur = conn.cursor()
+        query = f'INSERT INTO users(email, full_name, pword, phone_number, physical_interest, workout_time, gym_location) VALUES ({email}, {full_name}, {pword}, {phone_number}, {physical_interest}, {workout_time}, {gym_location})'
+        cur.execute(query)
+    except:
+        print("Failed")
 
-if __name__ == "__main__":
-    main()
