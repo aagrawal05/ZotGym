@@ -121,7 +121,17 @@ def write_fake_messages():
     conn.commit() 
 
 
-
+def get_user_by_id(id: int):
+    conn = sqlite3.connect(file)
+    cur = conn.cursor()
+    try:
+        res = cur.execute('''SELECT full_name, phone_number FROM users WHERE serial_number = ?''', (id,))
+        return res.fetchall()
+    except sqlite3.Error as e:
+        print("Failed because of {e}")
+    finally:
+        if conn:
+            conn.close()
 
 
 def get_messages(sender_id: int, receiver_id: int):
@@ -137,8 +147,36 @@ def get_messages(sender_id: int, receiver_id: int):
         if conn:
             conn.close()
 
+def get_email_from_id(id: int):
+    conn = None
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        email = cur.execute('SELECT email FROM users WHERE serial_number = ?', (id,)).fetchall()
+        return email[0][0]
+    except sqlite3.Error as e:
+        print("Failed because of {e}")
+    finally:
+        if conn:
+            conn.close()
 
-\
+def check_user_exists(email: str, pword: str) -> bool:
+    conn = None
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        all_users = cur.execute('SELECT * FROM users').fetchall()
+    except sqlite3.Error as e:
+        print("Failed because of {e}")
+    finally:
+        if conn:
+            conn.close()
+    
+    print(all_users)
+    for user in all_users:
+        if user[1] == email and user[3] == pword:
+            return (True, user[0])
+    return (False, None)
 # def delete_user(serial_number):
 #     """
 #     Delete a user from the database based on their serial_number.
