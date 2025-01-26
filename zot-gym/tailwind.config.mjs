@@ -13,5 +13,16 @@ export default {
       },
     },
   },
+
+  theme: {
+    extend: {
+      fontFamily: {
+        jersey: ["Jersey 20", "sans-serif"],
+        hammersmith: ["Hammersmith One", "sans-serif"],
+        holtwood: ["Holtwood One SC", "serif"],
+      },
+    },
+  },
+  
   plugins: [],
 };
