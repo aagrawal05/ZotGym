@@ -1,0 +1,29 @@
+<form action="{{ url_for('edit_profile', serial_number=user.serial_number) }}" method="post">
+    <label for="fullname">Full Name:</label>
+    <input type="text" id="fullname" name="fname" placeholder="Full Name" value="{{ user.full_name }}" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+    
+    <label for="password">Password:</label>
+    <input type="text" id="pword" name="pword" placeholder="Password" value="{{ user.pword }}" required>
+
+    <label for="phone_num">Phone Number:</label>
+    <input type="text" id="phone_num" name="phone_number" placeholder="Phone Number" value="{{ user.phone_number }}" required>
+
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" name="gender" placeholder="Gender" value="{{ user.gender }}" required>
+
+    <label for="phys_interest">Sports Preference:</label>
+    <input type="text" id="phys_interest" name="physical_interest" placeholder="Physical Interst" value="{{ user.physical_interest }}"required>
+
+    <label for="workout_time">Workout Times:</label>
+    <input type="text" id="workout_time" name="workout_time" placeholder="Workout Times" value="{{ user.workout_time }}" required>
+
+    <label for="gym_loc">Gym Locations:</label>
+    <input type="text" id="gym_loc" name="gym_location" placeholder="Gym Locations" value="{{ user.gym_location }}" required>
+
+    <label for="profile_pic">Profile Picture:</label>
+    <input type="text" id="profile_pic" name="profile_pic" placeholder="Profile Picture URL" value="{{ user.profile_pic }}">
+    <button type="submit">Save Changes</button>
+</form>

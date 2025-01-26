@@ -1,23 +1,30 @@
-<form action="{{ url_for("signup")}}" method="post">
+<form action="{{ url_for('signup')}}" method="post">
     <label for="firstname">Full Name:</label>
-    <input type="text" id="fullname" name="fname" placeholder="fullname">
+    <input type="text" id="fullname" name="fname" placeholder="fullname" required>
 
     <label for="email">Email:</label>
-    <input type="text" id="email" name="email" placeholder="email">
+    <input type="text" id="email" name="email" placeholder="email" required>
 
     <label for="password">Password</label>
-    <input type="text" id="pword" name="pword" placeholder="password">
+    <input type="text" id="pword" name="pword" placeholder="password" required>
 
     <label for="phone number">Phone Number:</label>
-    <input type="text" id="phone_num" name="phone_number" placeholder="phone_number">
+    <input type="text" id="phone_num" name="phone_number" placeholder="phone_number" required>
 
-    <label for="physical interests">Physical Interests:</label>
-    <input type="text" id="phys_interest" name="physical_interest" placeholder="phys_interest">
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" name="gender" placeholder="gender" required>
+
+    <label for="physical interests">Sports Preference:</label>
+    <input type="text" id="phys_interest" name="physical_interest" placeholder="phys_interest" required>
 
     <label for="workout_times">Workout Times:</label>
-    <input type="text" id="workout_time" name="workout_time" placeholder="workout_time">
+    <input type="text" id="workout_time" name="workout_time" placeholder="workout_time" required>
 
     <label for="location">Gym Locations:</label>
-    <input type="text" id="gym_loc" name="gym_location" placeholder="gym_loc">
+    <input type="text" id="gym_loc" name="gym_location" placeholder="gym_loc" required>
+
+    <label for="profile picture">Profile Picture:</label>
+    <input type="text" id="profile_pic" name="profile_pic" placeholder="profile_pic">
+
 
     <button type="submit">Sign Up</button>

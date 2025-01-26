@@ -6,6 +6,7 @@ export default function Playground() {
   return (
     <div>
       <main>
+          <ChatBar handleSend = {handleMessageSend}/>
       </main>
     </div>
   );

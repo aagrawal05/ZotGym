@@ -1,5 +1,6 @@
 CREATE TABLE users (
-	email text PRIMARY KEY,
+    user_id id PRIMARY KEY
+	email text,
 	full_name text,
 	pword text,
 	phone_number text,
