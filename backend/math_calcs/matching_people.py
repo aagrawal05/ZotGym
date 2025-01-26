@@ -28,7 +28,8 @@ import heapq
 # gym_encoded = []
 
 def create_encoded_list(email: str):
-    file = '/Users/pranav/Desktop/ZotGym/backend/database.db'
+    file = 'database.db'
+    # file = '/Users/pranav/Desktop/ZotGym/backend/database.db'
     physical_categories = ['weightlifting', 'basketball', 'running', 'badminton', 'soccer', 'volleyball']
     date_categories = ['sunday morning', 'sunday afternoon', 'sunday night', 'monday morning', 'monday afternoon', 'monday night',
                     'tuesday morning', 'tuesday afternoon', 'tuesday night', 'wednesday morning', 'wednesday afternoon', 'wednesday night',
@@ -41,18 +42,21 @@ def create_encoded_list(email: str):
     gym_encoded = []
 
     result = None
+    conn = None  # Initialize conn here, just in case of failure before it gets defined.
+
     try:
         conn = sqlite3.connect(file)
-        print('made')
         cur = conn.cursor()
         cur.execute('SELECT * FROM users;')
-        conn.commit()
-        result = list(cur.fetchall())
-    except:
-        print("failed")
+        result = list(cur.fetchall())  # Collect all rows from the query.
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
     finally:
         if conn:
             conn.close()
+            print('Connection closed')
 
     for row in result:
         phys = row[5]
@@ -101,7 +105,7 @@ def create_encoded_list(email: str):
         emails = []
         print(f'Similar people list is {similar_people_index_list}')
         for index in similar_people_index_list:
-            emails.append(result[index][0])
+            emails.append(result[index])
         
         return emails
         

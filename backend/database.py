@@ -5,6 +5,7 @@ import time
 
 file = "database.db"
 def database_manage():
+    create_messages_table()
     try:
         conn = sqlite3.connect(file)
         print("Database connected")
@@ -98,8 +99,8 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
         gym_location_str = ','.join(gym_location).lower() if isinstance(gym_location, list) else gym_location.lower()
         gender = gender.lower()
         phone_number = format_phone_number(phone_number)
-        cur.execute(""" INSERT INTO users(serial_number, email, full_name, pword, phone_number, physical_interest, workout_time, gym_location, profile_pic, gender)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""", (serial_number,
+        row = cur.execute(""" INSERT INTO users(serial_number, email, full_name, pword, phone_number, physical_interest, workout_time, gym_location, profile_pic, gender)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *;""", (serial_number,
                                           email, 
                                           full_name, 
                                           pword, 
@@ -109,13 +110,31 @@ def add_user_to_db(email, full_name, pword, phone_number, physical_interest, wor
                                           gym_location_str,
                                           profile_pic,
                                           gender))
+        new_row = cur.fetchone()
         conn.commit()
+        return new_row
         print("User added successfully")
     except sqlite3.Error as e:
         print(f"Database error: {e}")
     finally:
         if conn:
             conn.close()
+
+def write_message(fr, to, m, ti):
+    print ("WRITING", fr, to, m, ti)
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+        # cur_time = round(time.time() * 1000)
+        cur.execute('''INSERT INTO messages(sender_id, receiver_id, message_text, time) 
+                    VALUES(?, ?, ?, ?)''', (fr, to, m, ti))  
+        conn.commit() 
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    finally:
+        if conn:
+            conn.close()
+
 
 def write_fake_messages():
     conn = sqlite3.connect(file)
@@ -143,14 +162,17 @@ def get_messages(sender_id: int, receiver_id: int):
     try:
         conn = sqlite3.connect(file)
         cur = conn.cursor()
-        cur.execute("""SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) LIMIT 10
-                    ORDER BY message_id DESC""", (sender_id, receiver_id, receiver_id, sender_id))
+        res = cur.execute("""SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY message_id ASC LIMIT 100 """, (sender_id, receiver_id, receiver_id, sender_id))
         conn.commit()
-    except:
-        print('failed')
+        print ("getting_messages", sender_id, receiver_id)
+        return res.fetchall()
+    except sqlite3.Error as e:
+        print(f"Failed because of {e}")
     finally:
         if conn:
             conn.close()
+
+
 
 def get_email_from_id(id: int):
     conn = None
@@ -165,14 +187,18 @@ def get_email_from_id(id: int):
         if conn:
             conn.close()
 
-def check_user_exists(email: str, pword: str) -> bool:
+def check_user_exists(email: str, pword: str):
     conn = None
     try:
         conn = sqlite3.connect(file)
         cur = conn.cursor()
-        all_users = cur.execute('SELECT * FROM users').fetchall()
+        user = cur.execute('SELECT * FROM users WHERE email = ? AND pword = ?', (email, pword)).fetchall()
+        return user
     except sqlite3.Error as e:
         print("Failed because of {e}")
+    finally:
+        if conn:
+            conn.close()
 
 def update_user(serial_number, email, full_name, pword, phone_number, physical_interests, workout_time, gym_location, profile_pic, gender):
     """

@@ -1,0 +1,37 @@
+.userProfile {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  background-color: #f9f9f9;
+  width: 95%;
+  max-width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profilePic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.interests,
+.avail,
+.location {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/* strong { */
+/*   font-weight: bold; */
+/*   color: #333; */
+/* } */

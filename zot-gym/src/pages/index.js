@@ -18,18 +18,6 @@ export default function Home() {
     <>
       <Head>
         <title>Zot GymMates</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Holtwood+One+SC&family=Jersey+20&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
       <div className="flex flex-col items-center p-5 min-h-screen">
@@ -43,14 +31,19 @@ export default function Home() {
             <div className="text-2xl font-holtwood text-black">Zot GymMates</div>
           </div>
           <nav className="grid grid-flow-col place-content-center gap-8">
-            {user ? <Profile {...user} /> : <button className="text-xl">Login</button>}
+              {user ? (<Profile {...user} />) : 
+                (<div>
+                  <button className="text-xl text-black mr-7" onClick={() => { window.location.href = '/login'}}>Login</button>
+                  <button className="text-xl text-black" onClick={() => { window.location.href = '/signup'}}>Sign Up</button>
+                </div>)
+              }
           </nav>
         </header>
 
         <main className="flex justify-between items-center flex-grow w-full max-w-screen-lg">
           <div className="flex-1 flex flex-col items-center p-5 font-jersey mt-[170px] mb-[20%]">
             <h1 className="text-4xl text-black">Looking for Gymmates?</h1>
-            <button className="mt-12 px-6 py-3 text-white bg-blue-500 rounded-3xl text-xl cursor-pointer">
+            <button className="mt-12 px-6 py-3 text-black bg-blue-500 rounded-3xl text-xl cursor-pointer">
               Find ZotMates
             </button>
           </div>
@@ -59,7 +52,7 @@ export default function Home() {
             <img
               src="https://img.freepik.com/free-photo/group-people-exercising-together-outdoors_23-2151061449.jpg?semt=ais_hybrid"
               alt="Group workout"
-              className="w-full max-w-[400px] max-h-[200px] object-cover"
+              className="w-full object-cover"
             />
           </div>
         </main>

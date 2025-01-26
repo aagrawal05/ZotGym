@@ -44,35 +44,24 @@ export default function Room() {
         if (userData) {
             setUser(userData)
 
-            // const profileData = await fetch('http://localhost:3000/users/' + router.query.user_id)
-            // setRecipientProfile(profileData.json())
-            const profileData = {
-                id: [2, 1][router.query.user_id-1],
-                name: "Taiwanese Man",
-                pfp: "bit.ly/dan-abramov"
-            }
-            setRecipientProfile(profileData)
-
-            // insecure add auth middleware
-            // const previousMessages = await fetch(
-            //     'http://localhost:5000/messages?' + 
-            //     new URLSearchParams({
-            //         from_id: 1,
-            //         to_id: 2,
-            //     })
-            // )
-            // setMessages(previousMessages.json())
-
-            const previousMessages = [
-                {
-                    isSender: true,
-                    message: "hello!"
-                },
-                {
-                    isSender: false,
-                    message: "hey!"
-                },
-            ] 
+            const rid = window.location.href.split('/').at(-1)
+            const profileData = await fetch('http://127.0.0.1:5000/users/' + rid)
+                .then(res=>res.json())
+            const processedData = {
+                id: profileData[0][0],
+                name: profileData[0][2],
+                interests: profileData[0][5],
+                avail: profileData[0][6],
+                location: profileData[0][7],
+                pfp: profileData[0][8],
+                readonly: true
+            };
+            setRecipientProfile(processedData)
+           
+            const previousMessages = await fetch('http://127.0.0.1:5000/messages/' + 
+                userData.id + '/' + 
+                rid
+            ).then(res => res.json())
             setMessages(previousMessages)
             setCheckedMessages(true)
         }
@@ -116,20 +105,24 @@ export default function Room() {
   }, [recipientProfile, checkedMessages, initialized])
 
   return (
-    <div>
-      <main>
-          {/* <Profile {...recipientProfile} /> */}
-          {/* row */}
-          <div>
-            {/* side bar with other dms */}
-            <div>
-            </div>
-            {/* chat message container */}
-            <div>{messages.map((message, index) => <ChatBubble key={index} {...message} />)}</div>
-          </div>
-          <ChatBar handleSend = {handleMessageSend} disabled={loading} />
-      </main>
-    </div>
+    <main className="flex h-screen bg-gray-100">
+      <div className="flex flex-col flex-wrap content-center w-1/4 bg-white p-4 shadow-lg">
+         <img className="w-24 h-24 my-5 mx-auto rounded-full border-4 transition-all duration-300 ease-in-out hover:shadow-xl"
+          src={recipientProfile?.pfp ? recipientProfile.pfp : "https://static-00.iconduck.com/assets.00/profile-circle-icon-256x256-cm91gqm2.png"}
+          alt={"Avatar"}
+        />
+          <h2 className="text-lg font-semibold text-gray-800 truncate text-center">{recipientProfile?.name}</h2>
+          {/* Fill more information here about recipient or other dms */}
+      </div>
+
+      <div className="flex-1 bg-gray-50 p-6 overflow-y-auto h-[90%]">
+        <div className="flex flex-col space-y-4">
+          {messages.map((message, index) => (
+            <ChatBubble key={index} {...message} />
+          ))}
+        </div>
+      </div>
+      <ChatBar handleSend={handleMessageSend} disabled={loading} />
+    </main>
   );
 }
-

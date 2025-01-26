@@ -2,6 +2,7 @@
 import asyncio
 import websockets
 import uuid
+import requests
 
 connected_clients = {}
 sid_to_uid = {}
@@ -27,17 +28,23 @@ async def handler(websocket):
             if (action == "I"):
                 sid_to_uid[socket_id] = payload[0]
             elif (action == "S"):
-                recieve_uid, content, time = payload
-                # TODO: SQL store
+                receive_uid, content, time = payload
                 send_uid = sid_to_uid[socket_id] 
-                recieve_sid = ''
+                message_data = {
+                    "message": content,
+                    "time": time
+                }
+                url = f"http://127.0.0.1:5000/messages/{send_uid}/{receive_uid}"
+                print(url, message_data)
+                response = requests.post(url, json=message_data)
+                receive_sid = ''
                 for key, value in sid_to_uid.items():
-                    if (value == recieve_uid):
-                        recieve_sid = key
+                    if (value == receive_uid):
+                        receive_sid = key
                         break
-                if (recieve_sid):
+                if (receive_sid):
                     server_message = f"R|{send_uid}|{content}"
-                    await connected_clients[recieve_sid].send(server_message)
+                    await connected_clients[receive_sid].send(server_message)
                     print(server_message)
                 print(message)
 
@@ -47,8 +54,8 @@ async def handler(websocket):
         on_disconnect(socket_id)
 
 async def main():
-    async with websockets.serve(handler, "169.234.106.119", 8765):
-        print("Server started at ws://169.234.106.119:8765")
+    async with websockets.serve(handler, "localhost", 8765):
+        print("Server started at ws://localhost:8765")
         await asyncio.Future()
 
 asyncio.run(main())
