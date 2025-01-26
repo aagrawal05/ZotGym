@@ -19,7 +19,7 @@ def database_manage():
 	                workout_time TEXT NOT NULL,
 	                gym_location TEXT NOT NULL,
                     profile_pic TEXT,
-                    gender TEXT
+                    gender TEXT NOT NULL
                 ); """
         cur.execute(table)
         conn.commit()
@@ -242,33 +242,33 @@ def get_user_by_serial(serial_number):
 
 
 
-def delete_user(serial_number):
-    """
-    Delete a user from the database based on their serial_number.
-    """
-    try:
-        conn = sqlite3.connect(file)
-        cur = conn.cursor()
+# def delete_user(serial_number):
+#     """
+#     Delete a user from the database based on their serial_number.
+#     """
+#     try:
+#         conn = sqlite3.connect(file)
+#         cur = conn.cursor()
         
-        # Execute the DELETE query
-        cur.execute("DELETE FROM users WHERE serial_number = ?", (serial_number,))
-        conn.commit()  # Commit changes to the database
+#         # Execute the DELETE query
+#         cur.execute("DELETE FROM users WHERE serial_number = ?", (serial_number,))
+#         conn.commit()  # Commit changes to the database
         
-        if cur.rowcount > 0:
-            print(f"User with serial_number {serial_number} deleted successfully.")
-        else:
-            print(f"No user found with serial_number {serial_number}.")
-    except sqlite3.Error as e:
-        print(f"Database error: {e}")
-    finally:
-        if conn:
-            conn.close()
+#         if cur.rowcount > 0:
+#             print(f"User with serial_number {serial_number} deleted successfully.")
+#         else:
+#             print(f"No user found with serial_number {serial_number}.")
+#     except sqlite3.Error as e:
+#         print(f"Database error: {e}")
+#     finally:
+#         if conn:
+#             conn.close()
     
-    print(all_users)
-    for user in all_users:
-        if user[1] == email and user[3] == pword:
-            return (True, user[0])
-    return (False, None)
+#     print(all_users)
+#     for user in all_users:
+#         if user[1] == email and user[3] == pword:
+#             return (True, user[0])
+#     return (False, None)
 
 # def delete_user(serial_number):
 
