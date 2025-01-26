@@ -76,7 +76,6 @@ def edit_profile(serial_number):
             print(f"Error updating user: {e}")
             return f"Error updating user: {e}", 400
 
-    # Fetch user data for the GET request
     user_data = get_user_by_serial(serial_number)
     print(f"User data fetched: {user_data}") 
     if user_data:
