@@ -32,7 +32,7 @@ export default function Home() {
         />
       </Head>
 
-      <div className="flex flex-col items-center p-5 bg-white min-h-screen">
+      <div className="flex flex-col items-center p-5 min-h-screen">
         <header className="flex flex-row justify-between gap-5 w-full px-5 py-2">
           <div className="flex items-center gap-2">
             <img
@@ -63,6 +63,43 @@ export default function Home() {
             />
           </div>
         </main>
+        <section class="grid md:grid-cols-3 gap-8 px-8 py-12 " style={{}}>
+          <div class="flex flex-col bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+            <img src="image 3.png" alt="Mesa Court Fitness" class="h-64 w-full object-cover"/>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-black">Mesa Court Fitness</h3>
+                <p class="mt-4 text-gray-700">
+                  Monday - Friday: 9:30AM - 11PM<br />
+                  Saturday: 9:30AM - 11PM<br />
+                  Sunday: 9:30AM - 11PM
+                </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+            <img src="image 4.png" alt="Middle Earth Fitness" class="h-64 w-full object-cover"/>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-black">Middle Earth Fitness</h3>
+                  <p class="mt-4 text-gray-700">
+                    Monday - Friday: 9:30AM - 11PM<br />
+                    Saturday: 9:30AM - 11PM<br />
+                    Sunday: 9:30AM - 11PM
+                  </p>
+              </div>
+          </div>
+
+          <div class="flex flex-col bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+            <img src="image 5.png" alt="ARC" class="h-64 w-full object-cover"/>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-black">ARC</h3>
+                  <p class="mt-4 text-gray-700">
+                    Monday - Friday: 6AM - 12PM<br />
+                    Saturday: 8AM - 9PM<br />
+                    Sunday: 8AM - 12PM
+                  </p>
+              </div>
+          </div>
+        </section>
       </div>
     </>
   );
