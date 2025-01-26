@@ -63,9 +63,7 @@ def login_user():
 def get_user_with_id_param(id):
     if request.method == 'GET':
         result = get_user_by_id(id)
-    return render_template('create_profile.html')
-
-
+        jsonify(result)
 
 # try:
 #     conn = sqlite3.connect()

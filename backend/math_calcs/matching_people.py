@@ -101,7 +101,7 @@ def create_encoded_list(email: str):
         emails = []
         print(f'Similar people list is {similar_people_index_list}')
         for index in similar_people_index_list:
-            emails.append(result[index][1])
+            emails.append(result[index][0])
         
         return emails
         

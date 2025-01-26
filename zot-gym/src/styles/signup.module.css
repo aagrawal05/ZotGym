@@ -1,0 +1,113 @@
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+  
+.signupcontainer {
+    background-color: #DCD9D9;
+    width: 30%;
+    /* height: 50%; */
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin-top: -200px;
+    margin-left: -250px;
+    align-self: center;
+    border-radius: 10px;
+
+}
+  
+  
+.font {
+    margin-top: 3%;
+    font-size: 50px;
+    margin-bottom: 1.5rem;
+    color: black;
+    text-align: center;
+    font-family: "Alata", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    width: 100%;
+    display: grid;
+    gap: 20px;
+}
+  
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inputgroup {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    background-color: white;
+    border-radius: 25px;
+    width: 80%;
+    margin: 0 auto;
+}
+  
+.inputgroup .icon {
+    margin-right: 30px;
+    height: 30px;
+    width: 30px;
+}
+  
+.inputgroup input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    background-color: transparent;
+    align-items: center;
+}
+  
+.nextbutton {
+    background-color: #0000ff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    font-size: 16px;
+    cursor: pointer;
+    width: 60%;
+    margin: 0 auto;
+    font-family: "Alata", serif;
+    font-weight: 400;
+    font-style: normal;
+    
+}
+  
+.nextbutton:hover {
+    background-color: #0000cc;
+}
+  
+.loginlink {
+    margin-top: 1rem;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 3%;
+    font-family: "Alata", serif;
+    font-weight: bold;
+    font-style: normal;
+
+}
+  
+.loginlink a {
+    color: #0000ff;
+    text-decoration: none;
+}
+  
+.loginlink a:hover {
+    text-decoration: underline;
+}

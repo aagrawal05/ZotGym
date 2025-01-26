@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  height: 100vh;
+}
+
+.logo {
+  font-size: 2em;
+  font-family: "Holtwood One SC", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: black;
+  display: flex;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 20px;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.navlinks {
+  display: grid;
+  grid-auto-flow: column;
+  place-content: center;
+  gap: 30px;
+}
+
+.navlinks a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5em;
+}
+
+.maincontent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.textsection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: "Jersey 20", serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 20%;
+  padding-top: 170px;
+}
+
+.textsection h1 {
+  font-size: 4em;
+  margin: 0;
+  color: black;
+}
+
+.ctabutton {
+  margin-top: 50px;
+  padding: 10px 20px;
+  font-size: 1.7em;
+  color: white;
+  background-color: #0000ff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.peter {
+  height: 50px;
+}
+
+.imagesection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50vh;
+  overflow: hidden;
+}
+
+.workout-image {
+  width: 100%;
+  max-width: 400px;
+  max-height: 200px;
+  object-fit: cover;
+}

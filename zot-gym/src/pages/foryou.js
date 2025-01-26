@@ -1,17 +1,14 @@
-import Image from "next/image";
-import Head from "next/head";
-
 import { useEffect, useState } from "react";
+
 import { checkAuth } from "@/hooks/auth";
 
-import Profile from "@/components/profile";
-
-export default function Home() {
+export default function ForYou() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userData = checkAuth(false);
+    const userData = checkAuth(true);
     if (userData) setUser(userData);
+    const matchData = fetch("http://localhost:3000/foryou/" + userData.id)
   }, []);
 
   return (
@@ -67,4 +64,3 @@ export default function Home() {
     </>
   );
 }
-

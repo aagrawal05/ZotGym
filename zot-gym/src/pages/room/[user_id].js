@@ -40,7 +40,7 @@ export default function Room() {
 
   useEffect(() => {
      const asyncFetch = async () => {
-        const userData = checkAuth()
+        const userData = checkAuth(true)
         if (userData) {
             setUser(userData)
 

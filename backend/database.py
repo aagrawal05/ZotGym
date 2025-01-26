@@ -130,7 +130,7 @@ def get_user_by_id(id: int):
     conn = sqlite3.connect(file)
     cur = conn.cursor()
     try:
-        res = cur.execute('''SELECT full_name, phone_number FROM users WHERE serial_number = ?''', (id,))
+        res = cur.execute('''SELECT * FROM users WHERE serial_number = ?''', (id,))
         return res.fetchall()
     except sqlite3.Error as e:
         print("Failed because of {e}")
