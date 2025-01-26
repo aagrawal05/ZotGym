@@ -142,38 +142,95 @@ def get_messages(sender_id: int, receiver_id: int):
         if conn:
             conn.close()
 
+def update_user(serial_number, email, full_name, pword, phone_number, physical_interests, workout_time, gym_location, profile_pic, gender):
+    """
+    Update user details in the database.
+    """
+    try:
+        conn = sqlite3.connect('database.db') 
+        cur = conn.cursor()
+
+        query = """
+            UPDATE users
+            SET email = ?, full_name = ?, pword = ?, phone_number = ?, 
+                physical_interest = ?, workout_time = ?, gym_location = ?, 
+                profile_pic = ?, gender = ?
+            WHERE serial_number = ?;
+        """
+        cur.execute(query, (
+            email, full_name, pword, phone_number, physical_interests,
+            workout_time, gym_location, profile_pic, gender, serial_number
+        ))
+        conn.commit()
+        print("User updated successfully.")
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        raise ValueError(f"Database error: {e}")
+    finally:
+        conn.close()
 
 
-# def delete_user(serial_number):
-#     """
-#     Delete a user from the database based on their serial_number.
-#     """
-#     try:
-#         conn = sqlite3.connect(file)
-#         cur = conn.cursor()
+
+
+def get_user_by_serial(serial_number):
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
+
+        query = """
+            SELECT email, full_name, pword, phone_number, physical_interest,
+                   workout_time, gym_location, profile_pic, gender
+            FROM users WHERE serial_number = ?;
+        """
+        cur.execute(query, (serial_number,))
+        user = cur.fetchone()
+
+        if user:
+            return {
+                "email": user[0],
+                "full_name": user[1],
+                "pword": user[2],
+                "phone_number": user[3],
+                "physical_interest": user[4],
+                "workout_time": user[5],
+                "gym_location": user[6],
+                "profile_pic": user[7],
+                "gender": user[8],
+            }
+        else:
+            return None
+
+    except sqlite3.Error as e:
+        print(f"Error fetching user: {e}")
+        return None
+
+    finally:
+        conn.close()
+
+
+
+
+def delete_user(serial_number):
+    """
+    Delete a user from the database based on their serial_number.
+    """
+    try:
+        conn = sqlite3.connect(file)
+        cur = conn.cursor()
         
-#         # Execute the DELETE query
-#         cur.execute("DELETE FROM users WHERE serial_number = ?", (serial_number,))
-#         conn.commit()  # Commit changes to the database
+        # Execute the DELETE query
+        cur.execute("DELETE FROM users WHERE serial_number = ?", (serial_number,))
+        conn.commit()  # Commit changes to the database
         
-#         if cur.rowcount > 0:
-#             print(f"User with serial_number {serial_number} deleted successfully.")
-#         else:
-#             print(f"No user found with serial_number {serial_number}.")
-#     except sqlite3.Error as e:
-#         print(f"Database error: {e}")
-#     finally:
-#         if conn:
-#             conn.close()
-
-# def update_user():
-#     try:
-#         conn = sqlite3.connect(file)
-#         cur = conn.cursor()
-#         cur.execute("UPDATE users SET gender = ? WHERE serial_number = ?", ('prefer not to say', 20))
-#         conn.commit()
-#     except sqlite3.Error as e:
-#         print(f"update error: {e}")
+        if cur.rowcount > 0:
+            print(f"User with serial_number {serial_number} deleted successfully.")
+        else:
+            print(f"No user found with serial_number {serial_number}.")
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    finally:
+        if conn:
+            conn.close()
     
 
 # def add_profile_pic_column():
