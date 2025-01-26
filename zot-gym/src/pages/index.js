@@ -38,9 +38,9 @@ export default function Home() {
             <img
               src="https://brand.uci.edu/master-branding/marks/_img/BCeater-right-768x416.png"
               alt="peter"
-              className="h-[50px]"
+              className="h-[70px]"
             />
-            <div className="text-2xl font-holtwood text-black">Zot GymMates</div>
+            <div className="text-5xl font-holtwood text-black">Zot GymMates</div>
           </div>
           <nav className="grid grid-flow-col place-content-center gap-8">
             {user ? <Profile {...user} /> : <button className="text-xl">Login</button>}
@@ -49,7 +49,7 @@ export default function Home() {
 
         <main className="flex justify-between items-center flex-grow w-full max-w-screen-lg">
           <div className="flex-1 flex flex-col items-center p-5 font-jersey mt-[170px] mb-[20%]">
-            <h1 className="text-4xl text-black">Looking for Gymmates?</h1>
+            <h1 className="text-6xl text-black font-hammersmith">Looking for Gymmates?</h1>
             <button className="mt-12 px-6 py-3 text-white bg-blue-500 rounded-3xl text-xl cursor-pointer">
               Find ZotMates
             </button>
