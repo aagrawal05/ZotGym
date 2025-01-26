@@ -63,9 +63,10 @@ def find_similar_matches(id):
 def login_user(email, pword):
     if request.method == 'GET':
         user = check_user_exists(email, pword)
-        if user[0]:
-            return jsonify(user[0])
-
+        if user:
+            return jsonify({ 'status': 200, 'data': user[0] })
+        else:
+            return jsonify({ 'status': 401 })
 @app.route('/users/<id>', methods = ['GET'])
 def get_user_with_id_param(id):
     if request.method == 'GET':

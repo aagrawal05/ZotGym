@@ -16,14 +16,14 @@ export default function Login() {
 
     const userData = await fetch('http://127.0.0.1:5000/login/' + email + '/' + password).then(res => res.json());
 
-    if (userData) {
+    if (userData.status == 200) {
       localStorage.setItem("auth", JSON.stringify({
-        id: userData[0],
-        name: userData[2],
-        interests: userData[5],
-        avail: userData[6],
-        location: userData[7],
-        pfp: userData[8],
+        id: userData.data[0],
+        name: userData.data[2],
+        interests: userData.data[5],
+        avail: userData.data[6],
+        location: userData.data[7],
+        pfp: userData.data[8],
       }));
       Swal.fire({
         title: "Logged In!",

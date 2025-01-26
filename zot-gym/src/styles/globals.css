@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply text-black;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -13,6 +19,7 @@
     --foreground: #ededed;
   }
 }
+
 
 body {
   color: var(--foreground);
